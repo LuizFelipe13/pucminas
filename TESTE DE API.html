@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        function ajax() {
+            try {
+                let xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        console.log('Status: ' + xhttp.status);
+                       // if (xhttp.status == 200) {
+                            let objeto = JSON.parse(xhttp.responseText);
+
+                            resposta.innerHTML = objeto.data.first_name + " " + objeto.data.last_name;
+                            resposta.innerHTML = objeto.data.email;
+
+                            // email.innerHTML = objeto.data.map(
+                            //     (e)=>e.email
+                                
+                            // ).join("<br>");,
+                            console.log(objeto);
+
+
+                        }
+                    }
+               // };
+                let usuario = {
+                    first_name: nome.value,
+                    email: email.value
+                }
+                xhttp.open('GET', 'https://reqres.in/api/users/', true);
+                xhttp.send(JSON.stringify(usuario));
+                
+
+            } catch (e) {
+                alert('Erro na comunicação com o servidor');
+            }
+
+        };
+
+        
+        
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESTE DE API</title>
+</head>
+
+<body>
+    <h1>TESTE DE API</h1>
+    <form>
+        <p>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id_Usuario">
+        </p>
+      
+        
+    </form>
+
+    <p>
+        <button type="submit" onclick="ajax()" id="pesquisar">Pesquisar</button>
+        
+    </p>
+
+    <p>
+        <p id="resposta" style="border: thin solid black; padding:2ex"></p>
+    </p>
+
+</body>
+
+</html>
