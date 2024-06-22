@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        onload = () => {
+            let geo = navigator.geolocation;
+
+            const geoCoords = function(posicao){
+                let lat = posicao.coords.latitude;
+                let lon = posicao.coords.longitude;
+                output.innerHTML = `Coordenadas: (${lat}; ${lon})`;
+                //console.log(posicao);
+            };
+            const geoError = function(erro){
+                console.log(erro);
+            }
+            geo.getCurrentPosition(geoCoords); // O getCurrentPosition() faz com que a geolocalização seja identificada apenas uma única vez quando o usuário acessa a página. 
+            let watchID = geo.watchPosition(geoCoords, geoError); // Já o watchPosition() permite com que a geolocalização seja identificada de forma contínua
+            console.log(watchID); // aqui mostra o WatchID que foi gerado
+            stWatch.onclick = () => { // aqui inicia a função para parar o watchPosition()
+                console.log(watchID); // aqui mostra qual watchID foi parado
+                geo.clearWatch(watchID); // aqui já limpa o watchID
+            }
+            
+        };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOLOCALIZAÇÃO</title>
+</head>
+<body>
+    <h1>GEOLOCALIZAÇÃO</h1>
+    <p id="output"></p>
+
+    <p><button id="stWatch">Parar Georeferenciamento</button></p>
+
+</body>
+</html>
