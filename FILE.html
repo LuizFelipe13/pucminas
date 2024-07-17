@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        onload = () => {
+            arquivos.onchange = () => {
+                for(let i=0; i< arquivos.files.length; i++)
+                console.log(arquivos.files[i]);
+            }
+        }
+
+        // O código acima fará com que o console mostra todas as informações dos arquivos
+
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FILE</title>
+</head>
+<body>
+    <h1>Fazendo upload de arquivos usando a API File</h1>
+
+    <input id="arquivos" multiple type="file"> <!--O atributo "multiple" é usado para quando queremos fazer o upload de 2 ou mais arquivos. Para um único arquivo, basta não usarmos o atributo "multiple"-->
+
+    <input id="arquivos2" multiple type="file" style="display: none;">
+    <button id="button"></button>
+
+</body>
+</html>
