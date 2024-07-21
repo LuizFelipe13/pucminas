@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .caixa {
+            width: 50px;
+            height: 50px;
+            background: #b9f;
+            border: 2px solid black;
+        }
+
+        .zona {
+            float: left;
+            margin-right: 2em;
+            border: thick dashed;
+            width: 100px;
+            height: 100px;
+        }
+
+        .zona-over {
+            opacity: 0.5;
+        }
+
+        .red {
+            border-color: #f33;
+        }
+
+        .blue {
+            border-color: #33f;
+        }
+        .black {
+            background-color: black;
+        }
+    </style>
+    <script>
+        onload = () => {
+            caixa.ondragstart = (e) => { // Início do evento
+                // console.log(e);
+                e.dataTransfer.setData('text/plain', caixa.id); // O objeto dataTransfer é um objeto para um espaço de referência de dados. Com ele, nós vamos identificar quem está sendo arrastado
+                caixa.classList.add('black');
+            };
+            caixa.ondragend = (e) => { // final do evento
+                caixa.classList.remove('black');
+            };
+            for(const z of document.querySelectorAll('.zona')){
+                z.ondragover = () => { // ondragover é quando arrastamos sobre a zona. Nesse caso, o console.log vai ficar contando a quantidade de arrastes nas zonas
+                    z.ondragover = (e) => {
+                        e.preventDefault();
+                        z.classList.add('zona-over'); // o preventDefault não permite que a contagem de arrastes/tempo na zona tenha o comportamento padrão. Neste caso, é sobre a permanência do objeto sendo segurado e arrastando dentro das zonas;
+
+                        z.ondragleave = () => {
+                            e.preventDefault();
+                            z.classList.remove('zona-over');
+                        };
+                        // z.ondrop = (e) => {
+                        //     e.preventDefault();
+                        //     const idCaixa = e.dataTransfer.getData('text/plain');
+                        //     const elemento = document.getElementById(idCaixa);
+                        //     z.appendChild(elemento);
+                        //     z.classList.remove('zona-over');
+                        // }
+                        z.ondrop = (e) => {
+                            e.preventDefault();
+                            let arquivos = e.dataTransfer.files;
+                            console.log(Array.from(arquivos).map(f=> f.name).join('/n'));
+                        }
+                    }
+                    console.log(z.id);
+                };
+            }
+        };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAG & DROP</title>
+</head>
+
+<body>
+    <h1>Drag & Drop</h1>
+    <p>
+    <div id="zona1" class="zona red">
+        <div id="caixa" class="caixa" draggable="true">
+        </div>
+    </div>
+    <div id="zona2" class="zona blue"></div>
+    </p>
+</body>
+
+</html>
